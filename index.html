@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Hub - Multi-Provider Monitoring</title>
+    <!-- External stylesheet connection -->
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/header.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- MAIN HEADER (LOGO AND SEARCH) -->
+        <header class="main-header">
+            <div class="header-top">
+                <div class="logo-area">Weather<span>Hub</span></div>
+                <div class="nav-links">
+                    <a href="/index.html" class="nav-item active">Weather</a>
+                    <a href="/favourite.html" class="nav-item">Favourite</a>
+                </div>
+            </div>
+            <div class="search-bar">
+                <form class="search-form">
+                    <input type="text" class="search-input" placeholder="Search for location...">
+                </form>
+                <button type="button" class="geo-btn" id="geo-location-btn" title="Define location">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="8"></circle>
+                        <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+                        <line x1="12" y1="1" x2="12" y2="4"></line>
+                        <line x1="12" y1="20" x2="12" y2="23"></line>
+                        <line x1="1" y1="12" x2="4" y2="12"></line>
+                        <line x1="20" y1="12" x2="23" y2="12"></line>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN PROVIDER SELECTION TABS -->
+        <div class="services-tabs">
+            <div class="service-tab active">OpenMeteo</div>
+            <div class="service-tab">WeatherAPI</div>
+            <div class="service-tab">OpenWeatherMap</div>
+        </div>
+
+
+
+        <!-- WEATHER DASHBOARD CARD (CURRENT ACTIVE SERVICE DATA) -->
+        <section class="weather-card">
+            <div class="weather-card-header">
+                <h2 class="location-title"></h2>
+
+                <div class="unit-toggle-container">
+                    <span class="unit-label active" id="unit-c">°C</span>
+                    <label class="switch">
+                        <input type="checkbox" id="unit-toggle-checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="unit-label" id="unit-f">°F</span>
+                </div>
+            </div>
+
+            <div class="current-weather-hero-wrapper">
+                
+            </div>
+
+
+            <!-- 3-Day Forecast Overview -->
+            <div class="forecast-days">
+                <div class="day-card active" id="day-today">
+                    <div class="day-title">Today</div>
+                    <div class="day-content">
+                        <div class="day-info">
+                            <div class="day-temp">--°</div>
+                            <div class="day-feel">Loading...</div>
+                        </div>
+                        <div class="day-icon"></div>
+                    </div>
+                </div>
+                <div class="day-card" id="day-tomorrow">
+                    <div class="day-title">Tomorrow</div>
+                    <div class="day-content">
+                        <div class="day-info">
+                            <div class="day-temp">--°</div>
+                            <div class="day-feel">Loading...</div>
+                        </div>
+                        <div class="day-icon"></div>
+                    </div>
+                </div>
+                <div class="day-card" id="day-day-after">
+                    <div class="day-title">Day After Tomorrow</div>
+                    <div class="day-content">
+                        <div class="day-info">
+                            <div class="day-temp">--°</div>
+                            <div class="day-feel">Loading...</div>
+                        </div>
+                        <div class="day-icon"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 24-Hour Express Hourly Forecast -->
+            <div class="hourly-forecast">
+
+            </div>
+
+            <div class="add-to-favourite">
+                <button type="button" id="favorite-toggle-btn" class="fav-btn">Add to favourite ★</button>
+            </div>
+        </section>
+
+        <!-- COMPARATIVE CHARTS PANEL (SIMULTANEOUS DISPLAY) -->
+        <div class="charts-container">
+            <div id="charts-provider-controls" class="charts-controls">
+                <label class="control-label">
+                    <input type="checkbox" id="chk-openmeteo" checked>
+                    <span class="custom-checkbox accu-color"></span> OpenMeteo
+                </label>
+                <label class="control-label">
+                    <input type="checkbox" id="chk-weather-api" checked>
+                    <span class="custom-checkbox weather-api-color"></span> WeatherAPI
+                </label>
+                <label class="control-label">
+                    <input type="checkbox" id="chk-openweathermap" checked>
+                    <span class="custom-checkbox openweather-color"></span> OpenWeatherMap
+                </label>
+            </div>
+
+            <div id="charts-items">
+                <div class="chart-wrapper">
+                    <div id="temp-chart-container">
+                        <div class="chart-blank-state">
+                            <span>Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-wrapper">
+                    <div id="wind-chart-container">
+                        <div class="chart-blank-state">
+                            <span>Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-wrapper">
+                    <div id="humidity-chart-container">
+                        <div class="chart-blank-state">
+                            <span>Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="https://unpkg.com/frappe-charts@1.2.4/dist/frappe-charts.min.iife.js" defer></script>
+
+    <script type="module" src="./scripts/App.js"></script>
+</body>
+
+</html>
