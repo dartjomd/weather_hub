@@ -42,7 +42,7 @@ export class WeatherServices {
                 delete this.#cache[cacheKey];
             }
         }
-        
+
         // If no cache exists or it is outdated
         const rawData = await this.fetchRawData(providerName, latitude, longitude);
 
@@ -225,13 +225,17 @@ export class WeatherServices {
                         // Hourly weather code, fallback to daily code if needed
                         const hourlyCode = rawData.hourly.weather_code?.[h] ?? rawData.hourly.weathercode?.[h] ?? code;
 
+                        // Define if it is day time or night time
+                        const isDay = (h % 24) >= 6 && (h % 24) < 20;
+
                         hourlyIntervals.push({
                             time: time,
                             temp: this.formatter.formatTemperature(temp),
-                            icon: this.formatter.mapWmoCodeToEmoji(hourlyCode)
+                            icon: this.formatter.mapWmoCodeToEmoji(hourlyCode, isDay)
                         });
                     }
                 }
+
 
                 days.push({
                     date: daily.time?.[i] || new Date().toISOString().split('T')[0],
@@ -245,11 +249,13 @@ export class WeatherServices {
             }
 
             const currentHour = new Date().getHours();
-
             const currentTemp = Math.round(rawData.hourly.temperature_2m?.[currentHour] ?? 0);
             const currentCode = rawData.hourly.weather_code?.[currentHour] ?? 0;
             const currentWind = Math.round((rawData.hourly.wind_speed_10m?.[currentHour] ?? 0) / 3.6);
             const currentHumidity = Math.round(rawData.hourly.relative_humidity_2m?.[currentHour] ?? 0);
+
+            const isDay = currentHour >= 6 && currentHour < 20;
+            const currentIcon = this.formatter.mapWmoCodeToEmoji(currentCode, isDay);
 
             const currentWeatherInfo = this.formatter.getWeatherType(currentCode);
 
@@ -257,7 +263,7 @@ export class WeatherServices {
                 temp: this.formatter.formatTemperature(currentTemp),
                 desc: currentWeatherInfo.text,
                 type: currentWeatherInfo.type,
-                icon: this.formatter.mapWmoCodeToEmoji(currentCode),
+                icon: currentIcon,
                 wind: currentWind,
                 humidity: currentHumidity
             };

@@ -1,12 +1,11 @@
 export class WeatherDataFormatter {
-    mapWmoCodeToEmoji(code) {
-        if (code === 0) return "☀️";
-        if (code <= 3) return "⛅";
+    mapWmoCodeToEmoji(code, isDay = true) {
+        if (code === 0) return isDay ? "☀️" : "🌙";
+        if (code <= 3) return isDay ? "⛅" : "☁️";
         if (code <= 48) return "☁️";
         if (code <= 67) return "🌦️";
         return "🌧️";
     }
-
     mapWmoCodeToText(code) {
         const descriptions = {
             0: "Clear sky",
